@@ -43,7 +43,8 @@ public class HistorialService {
     }
 
     public HistorialResponseDTO guardar(HistorialRequestDTO dto) {
-        HistorialMedicoId id = new HistorialMedicoId(null, dto.getPacienteRun());
+        long nextId = historialRepository.count() + 1;
+        HistorialMedicoId id = new HistorialMedicoId((int) nextId, dto.getPacienteRun());
         HistorialMedico historial = new HistorialMedico(
                 id,
                 dto.getFechaAtencion(),
