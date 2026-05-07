@@ -27,21 +27,9 @@ public class DataInitializer implements CommandLineRunner {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        historialRepository.save(new HistorialMedico(
-                new HistorialMedicoId(1, "22.359.190-6"),
-                sdf.parse("2024-01-15"),
-                "Hipertensión arterial leve"
-        ));
-        historialRepository.save(new HistorialMedico(
-                new HistorialMedicoId(2, "18.765.432-1"),
-                sdf.parse("2024-02-20"),
-                "Diabetes tipo 2"
-        ));
-        historialRepository.save(new HistorialMedico(
-                new HistorialMedicoId(3, "11.111.111-1"),
-                sdf.parse("2024-03-10"),
-                "Fractura de muñeca derecha"
-        ));
+        historialRepository.save(new HistorialMedico(new HistorialMedicoId(1, "22.359.190-6"), sdf.parse("2024-01-15"), "Hipertensión arterial leve"));
+        historialRepository.save(new HistorialMedico(new HistorialMedicoId(2, "18.765.432-1"), sdf.parse("2024-02-20"), "Diabetes tipo 2"));
+        historialRepository.save(new HistorialMedico(new HistorialMedicoId(3, "11.111.111-1"), sdf.parse("2024-03-10"), "Fractura de muñeca derecha"));
 
         log.info(">>> DataInitializer: {} historiales insertados correctamente.",
                 historialRepository.count());

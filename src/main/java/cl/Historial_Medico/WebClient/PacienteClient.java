@@ -15,7 +15,7 @@ public class PacienteClient {
         try {
             Map response = webClient
                     .get()
-                    .uri("/api/pacientes/" + run)
+                    .uri("/pacientes/" + run)
                     .retrieve()
                     .bodyToMono(Map.class)
                     .block();
