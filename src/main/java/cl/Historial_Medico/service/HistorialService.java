@@ -7,12 +7,14 @@ import cl.Historial_Medico.model.HistorialMedico;
 import cl.Historial_Medico.model.HistorialMedicoId;
 import cl.Historial_Medico.repository.HistorialRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class HistorialService {
@@ -32,6 +34,7 @@ public class HistorialService {
     }
 
     public List<HistorialResponseDTO> obtenerTodos() {
+        log.info("Obteniendo TODOS los historiales");
         return historialRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
@@ -39,10 +42,12 @@ public class HistorialService {
     }
 
     public Optional<HistorialResponseDTO> obtenerPorId(HistorialMedicoId id) {
+        log.info("Obteniendo el Historial de ID: "+ id);
         return historialRepository.findById(id).map(this::mapToDTO);
     }
 
     public HistorialResponseDTO guardar(HistorialRequestDTO dto) {
+        log.info("Creando un nuevo historial");
         long nextId = historialRepository.count() + 1;
         HistorialMedicoId id = new HistorialMedicoId((int) nextId, dto.getPacienteRun());
         HistorialMedico historial = new HistorialMedico(
@@ -54,6 +59,7 @@ public class HistorialService {
     }
 
     public Optional<HistorialResponseDTO> actualizar(HistorialMedicoId id, HistorialRequestDTO dto) {
+        log.info("Actualizando el Historial Medico con ID: " + id);
         return historialRepository.findById(id).map(existente -> {
             existente.setFechaAtencion(dto.getFechaAtencion());
             existente.setDiagnostico(dto.getDiagnostico());
@@ -63,5 +69,6 @@ public class HistorialService {
 
     public void eliminar(HistorialMedicoId id) {
         historialRepository.deleteById(id);
+        log.info("Eliminando el historial con ID" + id);
     }
 }
