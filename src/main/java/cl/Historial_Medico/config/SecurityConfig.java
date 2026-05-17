@@ -22,9 +22,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/historialMedico/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "//historialMedico/**").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "//historialMedico/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "//historialMedico/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/historialMedico/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/historialMedico/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/historialMedico/**").authenticated()
                 )
                 .httpBasic(httpBasic -> {});
         return http.build();
