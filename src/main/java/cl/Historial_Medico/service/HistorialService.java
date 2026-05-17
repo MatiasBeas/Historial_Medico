@@ -21,6 +21,7 @@ public class HistorialService {
     private final HistorialRepository historialRepository;
     private final PacienteClient pacienteClient;
 
+    //-----------------MAPEO PRIVADO: HISTORIAL -> ResponseDTO----------
     private HistorialResponseDTO mapToDTO(HistorialMedico historial) {
         String nombrePaciente = pacienteClient
                 .obtenerNombrePaciente(historial.getId().getRun());
@@ -33,6 +34,7 @@ public class HistorialService {
         );
     }
 
+    //-----------------BUSCAR HISTORIALES DE DISTINTAS FORMAS----------
     public List<HistorialResponseDTO> obtenerTodos() {
         log.info("Obteniendo TODOS los historiales");
         return historialRepository.findAll()
@@ -46,8 +48,9 @@ public class HistorialService {
         return historialRepository.findById(id).map(this::mapToDTO);
     }
 
+    //-----------------GUARDAR HISTORIAL----------
     public HistorialResponseDTO guardar(HistorialRequestDTO dto) {
-        log.info("Creando un nuevo historial");
+        log.info("Guardando un nuevo historial");
         long nextId = historialRepository.count() + 1;
         HistorialMedicoId id = new HistorialMedicoId((int) nextId, dto.getPacienteRun());
         HistorialMedico historial = new HistorialMedico(
@@ -58,6 +61,7 @@ public class HistorialService {
         return mapToDTO(historialRepository.save(historial));
     }
 
+    //-----------------ACTUALIZACION HISTORIAL----------
     public Optional<HistorialResponseDTO> actualizar(HistorialMedicoId id, HistorialRequestDTO dto) {
         log.info("Actualizando el Historial Medico con ID: " + id);
         return historialRepository.findById(id).map(existente -> {
@@ -67,6 +71,7 @@ public class HistorialService {
         });
     }
 
+    //-----------------ELIMINAR HISTORIAL----------
     public void eliminar(HistorialMedicoId id) {
         historialRepository.deleteById(id);
         log.info("Eliminando el historial con ID" + id);

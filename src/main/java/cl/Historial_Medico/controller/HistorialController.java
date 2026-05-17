@@ -18,12 +18,13 @@ public class HistorialController {
     private final HistorialService historialService;
 
 
+    //-----------------BUSCAR HISTORIALES DE DISTINTAS FORMAS----------
     @GetMapping
     public ResponseEntity<List<HistorialResponseDTO>> obtenerTodos() {
         return ResponseEntity.ok(historialService.obtenerTodos());
     }
 
-    //  /historial/{numFicha}/{run}
+    //  {numFicha}/{run}
     @GetMapping("/{numFicha}/{run}")
     public ResponseEntity<HistorialResponseDTO> obtenerPorId(
             @PathVariable int numFicha,
@@ -34,7 +35,7 @@ public class HistorialController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // /historial
+    //-----------------GUARDAR HISTORIAL----------
     @PostMapping
     public ResponseEntity<HistorialResponseDTO> crear(
             @Valid @RequestBody HistorialRequestDTO dto) {
@@ -42,7 +43,8 @@ public class HistorialController {
         return ResponseEntity.status(201).body(response);
     }
 
-    // /historial/{numFicha}/{run}
+    //-----------------ACTUALIZACION HISTORIAL----------
+    // {numFicha}/{run}
     @PutMapping("/{numFicha}/{run}")
     public ResponseEntity<HistorialResponseDTO> actualizar(
             @PathVariable int numFicha,
@@ -54,7 +56,8 @@ public class HistorialController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // /historial/{numFicha}/{run}
+    //-----------------ELIMINAR PACIENTE----------
+    // {numFicha}/{run}
     @DeleteMapping("/{numFicha}/{run}")
     public ResponseEntity<Void> eliminar(
             @PathVariable int numFicha,
