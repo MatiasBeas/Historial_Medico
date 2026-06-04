@@ -51,6 +51,11 @@ public class HistorialService {
     //-----------------GUARDAR HISTORIAL----------
     public HistorialResponseDTO guardar(HistorialRequestDTO dto) {
         log.info("Guardando un nuevo historial");
+
+        if (!pacienteClient.PacienteExistente(dto.getPacienteRun())) {
+            throw new RuntimeException("No existe un paciente con RUN: " + dto.getPacienteRun());
+        }
+
         long nextId = historialRepository.count() + 1;
         HistorialMedicoId id = new HistorialMedicoId((int) nextId, dto.getPacienteRun());
         HistorialMedico historial = new HistorialMedico(

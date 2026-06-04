@@ -11,6 +11,19 @@ import java.util.Map;
 public class PacienteClient {
     private final WebClient webClient;
 
+    public boolean PacienteExistente(String run) {
+        try {
+            webClient
+                    .get()
+                    .uri("/pacientes/" + run)
+                    .retrieve()
+                    .bodyToMono(Map.class)
+                    .block();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public String obtenerNombrePaciente(String run) {
         try {
             Map response = webClient
