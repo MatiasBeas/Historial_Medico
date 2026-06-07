@@ -33,7 +33,7 @@ public class PacienteClient {
                     .bodyToMono(Map.class)
                     .block();
 
-            return response != null ? (String) response.get("PNombre") : "Sin Paciente";
+            return response != null ? (String) response.get("pnombre") : "Sin Paciente";
         } catch (Exception e) {
             return "Sin Paciente";
         }
