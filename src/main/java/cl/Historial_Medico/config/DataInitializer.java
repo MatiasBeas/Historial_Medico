@@ -2,10 +2,14 @@ package cl.Historial_Medico.config;
 
 import cl.Historial_Medico.model.HistorialMedico;
 import cl.Historial_Medico.model.HistorialMedicoId;
+import cl.Historial_Medico.model.Role;
+import cl.Historial_Medico.model.User;
 import cl.Historial_Medico.repository.HistorialRepository;
+import cl.Historial_Medico.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -15,8 +19,20 @@ import java.text.SimpleDateFormat;
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
     private final HistorialRepository historialRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public void run(String... args) throws Exception {
+
+        // Crear usuario si no existe
+        if (userRepository.findByUsername("Maty").isEmpty()) {
+            User user = new User();
+            user.setUsername("Maty");
+            user.setPassword(passwordEncoder.encode("1234"));
+            user.setRole(Role.ADMIN);
+            userRepository.save(user);
+            log.info(">>> DataInitializer: Usuario Maty creado correctamente.");
+        }
 
         if (historialRepository.count() > 0) {
             log.info(">>> DataInitializer: la BD ya tiene datos, se omite la carga inicial.");
